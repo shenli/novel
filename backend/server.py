@@ -32,9 +32,23 @@ Chapter:
 """
 
 
-class NovelServer:
+class Server:
     def __init__(self, db):
         self.db = db
+
+
+class NovelServer (Server):
+    def __init__(self, db):
+        super.__init__(db)
+
+    def get_novel(self, bid):
+        self.db.novel.find_one({'id': bid})
+
+
+
+def BookServer (Server):
+    def __init__(self, db):
+        super.__init__(db)
 
     def get_novel(self, bid):
         self.db.novel.find_one({'id': bid})

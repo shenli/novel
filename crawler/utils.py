@@ -1,0 +1,68 @@
+__author__ = 'mac'
+
+import logging
+import subprocess
+import requests
+
+HEADERS = {
+    "Accept":"text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
+    "Accept-Charset":"UTF-8,*;q=0.5",
+    "Accept-Encoding":"gzip,deflate",
+    "Accept-Language":"zh-CN,zh;q=0.8",
+    "User-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120427 Firefox/15.0a1"
+}
+
+
+logger = logging.getLogger('root')
+
+
+def http_get(url, headers=HEADERS, try_cnt=3, encode=None):
+    tc = 0
+    while tc < try_cnt:
+        try:
+            r = requests.get(url, headers=headers)
+            if encode is not None:
+                r.encoding = encode
+        except Exception, e:
+            tc += 1
+            logger.error("Exception in http_get", e)
+            continue
+        html = r.text
+        return html
+    return None
+
+
+def to_unicode(content):
+    child = subprocess.Popen(["./htmldecode"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    return child.communicate(content)[0]
+
+def gbk_to_utf8(str):
+    child = subprocess.Popen(["iconv", "-f", "gbk", "-t", "utf-8"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    return child.communicate(str)[0]
+
+
+def try_encode(str):
+    try:
+        str = str.encode("utf-8")
+        return str
+    except:
+        return str
+
+
+def to_utf8(content):
+    content = to_unicode(content)
+    content = try_encode(content)
+    return content
+
+
+def make_book_id(name, author):
+    pass
+
+
+def make_novel_id(name, author, site):
+    pass
+
+
+def get_site(url):
+    pass
+
