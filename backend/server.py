@@ -37,18 +37,24 @@ class Server:
         self.db = db
 
 
-class NovelServer (Server):
+class NovelServer(Server):
     def __init__(self, db):
         super.__init__(db)
 
     def get_novel(self, bid):
         self.db.novel.find_one({'id': bid})
 
+    def add_or_update(self, novel):
+        pass
 
 
-def BookServer (Server):
+def BookServer(Server):
     def __init__(self, db):
         super.__init__(db)
 
     def get_novel(self, bid):
         self.db.novel.find_one({'id': bid})
+
+    def add_or_update(self, book):
+        pass
+

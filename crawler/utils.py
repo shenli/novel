@@ -3,6 +3,8 @@ __author__ = 'mac'
 import logging
 import subprocess
 import requests
+import urlparse
+import hashlib
 
 HEADERS = {
     "Accept":"text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
@@ -37,8 +39,10 @@ def to_unicode(content):
     return child.communicate(content)[0]
 
 def gbk_to_utf8(str):
-    child = subprocess.Popen(["iconv", "-f", "gbk", "-t", "utf-8"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    return child.communicate(str)[0]
+    #child = subprocess.Popen(["iconv", "-f", "gbk", "-t", "utf-8"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    #return child.communicate(str)[0]
+    str = str.decode("gbk").encode("utf-8")
+    return str
 
 
 def try_encode(str):
@@ -55,14 +59,40 @@ def to_utf8(content):
     return content
 
 
+
 def make_book_id(name, author):
-    pass
+    txt = name + "#" + author + "#xiaoshuov.com"
+    m = hashlib.md5()
+    m.update(txt)
+    bid = m.hexdigest()[:16]
+    return bid
 
 
 def make_novel_id(name, author, site):
-    pass
+    txt = name + "#" + author + "#" + site
+    m = hashlib.md5()
+    m.update(txt)
+    nid = m.hexdigest()[:16]
+    return nid
+
+
+def make_chapter_id(url):
+    txt = url
+    m = hashlib.md5()
+    m.update(txt)
+    cid = m.hexdigest()[:16]
+    return cid
+
+
+def uniform_hostname(hn):
+    return hn
 
 
 def get_site(url):
-    pass
+    up = urlparse.urlparse(url)
+    hostname = up.hostname
+    return hostname
 
+def get_url_path(url):
+    idx = url.rfind('/')
+    return url[:idx + 1]
