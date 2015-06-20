@@ -39,22 +39,43 @@ class Server:
 
 class NovelServer(Server):
     def __init__(self, db):
-        super.__init__(db)
+        Server.__init__(db)
 
     def get_novel(self, bid):
         self.db.novel.find_one({'id': bid})
 
     def add_or_update(self, novel):
-        pass
+        nid = novel['nid']
+        #update novel
+        self.db.save_novel(nid, novel)
 
 
 def BookServer(Server):
     def __init__(self, db):
-        super.__init__(db)
+        Server.__init__(db)
 
-    def get_novel(self, bid):
-        self.db.novel.find_one({'id': bid})
+    def get_book(self, bid):
+        self.db.get_novel(bid)
 
     def add_or_update(self, book):
-        pass
+        bid = book['bid']
+        #if not exist
+        if not self.db.exist_book(bid):
+            #add
+            #format book data, set src
+            self.db.save(book)
+        else:
+            #update
+            #get book data
+            book = self.get_book(bid)
+            if book['src_manual'] == 1:
+                pass
+            else:
+                #select better src
+                srcs = book['srcs']
+                for src in srcs:
+                    pass
+
+
+
 
