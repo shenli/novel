@@ -93,6 +93,18 @@ def get_site(url):
     hostname = up.hostname
     return hostname
 
+
 def get_url_path(url):
     idx = url.rfind('/')
     return url[:idx + 1]
+
+
+def novel_to_book(novel):
+    book = {}
+    cpy_attrs = ["bid", "name", "author", "status", "category", "rank", "image", "chapters"]
+    for attr in cpy_attrs:
+        if attr in novel:
+            book[attr] = novel[attr]
+    book["srcs"] = [novel["nid"]]
+    book["src"] = novel["nid"]
+    return book
