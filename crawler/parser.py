@@ -85,7 +85,7 @@ class LLXSParser(Parser):
                     novel['status'] = tmp[1]
         options = info.find('div', {'class': 'option'})
         if options is not None:
-            list_page = options.find('span' , {'class': 'btopt'}).a.get('href')
+            list_page = options.find('span', {'class': 'btopt'}).a.get('href')
             novel['list_url'] = list_page
         return novel
 
@@ -102,7 +102,6 @@ class LLXSParser(Parser):
         for li in book_list.findAll('li'):
             try:
                 url = li.span.a.get('href').encode("utf-8")
-
                 title = li.text.encode('utf-8')
                 chapter = {'url': base_url + url, "title": title,
                            'cid': utils.make_chapter_id(base_url + url)}

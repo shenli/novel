@@ -2,7 +2,7 @@ __author__ = 'mac'
 
 
 class DB:
-    def __init__(self):
+    def __init__(self, config={}):
         self.novel = None
         self.book = None
         self.chapter = None
@@ -15,6 +15,9 @@ class DB:
         pass
 
     def save_book(self, book):
+        pass
+
+    def update_book(self, data):
         pass
 
     def book_exists(self, bid):

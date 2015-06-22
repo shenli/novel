@@ -1,9 +1,8 @@
 __author__ = 'mac'
 
 
-import sys
 import json
-import requests
+import time
 import logging
 import logging.config
 
@@ -13,6 +12,7 @@ import utils
 import os
 logging.config.fileConfig(os.path.join(os.getcwd(), '../conf/logging.conf'))
 logger = logging.getLogger('root')
+
 
 class Crawler:
     def __init__(self):
@@ -40,6 +40,7 @@ class LLXSCrawler(Crawler):
         chapter_list = self.parser.parse_list_page(list_url, html)
         novel['chapter_list'] = chapter_list
         novel["chapters"] = len(chapter_list)
+        novel['update_time'] = time.time()
         return novel
 
     def crawl_content(self, url):
