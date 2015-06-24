@@ -44,6 +44,10 @@ class MainHandler(BaseHandler):
             self.write("Miss Bid")
         else:
             book = self.book_server.get_book(bid)
+            if book is not None:
+                curr_src = book.get('curr_src', None)
+                book = self.novel_server.get_novel(curr_src)
+
             self.write(json.dumps(book, indent=2))
 
 application = tornado.web.Application([

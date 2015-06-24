@@ -32,7 +32,6 @@ class MongoDB(DB):
 
     #book opts
     def get_book(self, bid):
-        print "@@@@", bid
         if bid is None:
             return None
         x = self.book.find_one({"bid": bid}, {"_id": False})
@@ -107,10 +106,10 @@ class MongoDB(DB):
 def run():
     db = MongoDB(conf)
     x = db.get_novel('87e797a165bf06f8')
-    print type(x)
+    print x
     for k in x:
         print k
-    print json.dumps(x)
+        print x[k]
     print "--------" * 50
     x = db.get_book("69ca8355704fae89")
     for k in x:

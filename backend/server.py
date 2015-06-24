@@ -43,8 +43,8 @@ class NovelServer(Server):
     def __init__(self, db):
         Server.__init__(self, db)
 
-    def get(self, bid):
-        return self.db.get_novel({'id': bid})
+    def get_novel(self, nid):
+        return self.db.get_novel(nid)
 
     def add_or_update(self, novel):
         if 'nid' not in novel:

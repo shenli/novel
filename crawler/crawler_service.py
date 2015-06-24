@@ -41,6 +41,7 @@ class LLXSCrawler(Crawler):
         novel['chapter_list'] = chapter_list
         novel["chapters"] = len(chapter_list)
         novel['update_time'] = time.time()
+        novel["last_chapter"] = chapter_list[-1]["url"]
         return novel
 
     def crawl_content(self, url):
