@@ -53,5 +53,6 @@ class NovelCrawler:
 
 if __name__ == "__main__":
     cs = NovelCrawler()
-    novel = cs.crawl(["http://00xs.com/book/xs11811.php"])
-    print json.dumps(novel, indent=2)
+    #novel = cs.crawl(["http://00xs.com/book/xs11811.php"])
+    print cs.crawl(sys.stdin)
+    #print json.dumps(novel, indent=2)

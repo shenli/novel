@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>莎莎小说网</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="css/offcanvas.css" rel="stylesheet">
+</head>
+<!-- NAVBAR
+================================================== -->
+<body>
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">狮子小说</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">首页</a></li>
+                {%for cat in cats%}
+                <li><a href="/cat/{{cat}}">{{cat}}</a></li>
+                {%end%}
+            </ul>
+        </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+</nav><!-- /.navbar -->
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8">
+        <div class="input-group">
+            <span class="input-group-addon">书名</span>
+            <input type="text" class="form-control" placeholder="凡人修仙传">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">搜索</button>
+      </span>
+        </div>
+        <!-- /input-group -->
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+<!-- /.row -->
+<p>
+<div class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-12 col-sm-9">
+            <span class="glyphicon glyphicon-fire" aria-hidden="true">热门</span>
+
+            <div class="row">
+                {%set book = hot_books[0]%}
+                <div class="col-xs-4 col-sm-4">
+                    <img src="{{book['image']}}"></img><p>
+                    <a class="btn btn-default" href="/book?bid={{book['bid']}}" role="button">点击阅读</a>
+                </div>
+                <div class="col-xs-8 col-sm-8">
+                    <span class="hot-boot-title">{{book['name']}}</span>
+
+                    <p>
+
+                    <p><a href="/book?bid={{book['bid']}}">{{book['desc']}}</a></p>
+
+                </div>
+            </div>
+            <p><span class="glyphicon glyphicon-star" aria-hidden="true">精选</span></p>
+
+            <div class="row">
+                {%set book = hot_books[1]%}
+                <div class="col-xs-6 col-lg-4">
+                    <a href="/book?bid={{book['bid']}}">
+                        <img src="{{book['image']}}"></img>
+
+                        <p>
+                            <span class="hot-book-author">{{book["author"]}}</span>:&nbsp;<span class="hot-book-title">{{book["name"]}}</span>
+
+                        <p>
+
+                    </a>
+                </div>
+                <!--/.col-xs-6.col-lg-4-->
+                {%set book = hot_books[2]%}
+                <div class="col-xs-6 col-lg-4">
+                    <a href="/book?bid={{book['bid']}}">
+                        <img src="{{book['image']}}"></img>
+
+                        <p>
+                            <span class="hot-book-author">{{book["author"]}}</span>:&nbsp;<span class="hot-book-title">{{book["name"]}}</span>
+
+                        <p>
+                    </a>
+                </div>
+                <!--/.col-xs-6.col-lg-4-->
+            </div>
+            <!--/row-->
+            {%for cat in cats%}
+            {%set books = cat_books[cat]%}
+            <div class="row">
+                <div class="panel panel-danger">
+                    <!-- Default panel contents -->
+                    <div
+                            class="panel-heading"><span>{{cat}}</span><a class="cat-more" href="/cat/{{cat}}">更多</a></div>
+                    <div class="panel-body">
+                        {%for book in books%}
+                        <div class="cat-book">
+                            <a href="/book?bid={{book['bid']}}">{{book["author"]}}: &nbsp; {{book["name"]}}</a>
+                        </div>
+                        {%end%}
+                    </div>
+                </div>
+            </div>
+            {%end%}
+        </div>
+        <!--/.col-xs-12.col-sm-9-->
+    </div>
+    <!--/row-->
+
+    <hr>
+
+    <footer>
+        <p>&copy; Company 2014</p>
+    </footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

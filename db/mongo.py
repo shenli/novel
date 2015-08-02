@@ -30,6 +30,10 @@ class MongoDB(DB):
         self.novel.create_index("nid")
         self.chapter.create_index("cid")
 
+    def get_all_books(self):
+        books = self.book.find({}, {"_id": False})
+        return books
+
     #book opts
     def get_book(self, bid):
         if bid is None:
@@ -71,6 +75,10 @@ class MongoDB(DB):
             return None
         return x
 
+    def search_novel(self, query):
+        x = self.novel.find(query, {"_id": False})
+        return x
+
     def add_novel(self, novel):
         x = self.novel.insert_one(novel)
         print x
@@ -105,16 +113,8 @@ class MongoDB(DB):
 
 def run():
     db = MongoDB(conf)
-    x = db.get_novel('87e797a165bf06f8')
-    print x
-    for k in x:
-        print k
-        print x[k]
-    print "--------" * 50
-    x = db.get_book("69ca8355704fae89")
-    for k in x:
-        print k
-    print x
+    for x in db.get_all_books():
+        print x['bid'], x
 
 if __name__ == "__main__":
     run()

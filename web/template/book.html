@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{{title}}</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!--nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">小说网站</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">首页</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+</nav-->
+
+<div class="container">
+    <div class="info">
+        <h2>{{book.get("name", "").encode("utf-8")}}</h2>
+
+        <div class="infobox row">
+            <div class="col-xs-4 col-md-4">
+                <div class="cover-img"><img src="{{book.get('image', '')}}"></img></div>
+            </div>
+            <div class="col-xs-8 col-md-8">
+                    <div><span>作者:&nbsp;</span><span>{{book.get("author")}}</span></div>
+                    <span class="label label-primary">{{book.get("category")}}</span>
+                    <span class="label label-info">{{book.get("status")}}</span>
+                    <div><span>章节数:&nbsp;</span><span>{{book.get("chapters")}}</span></div>
+                {%set last_ch = book.get("chapter_list")[-1]%}
+                {%set latest_url="http://m.baidu.com/tc?from=opentc&src=" + last_ch["url"]%}
+                <div>最新章节:&nbsp;<a href="{{latest_url}}">{{last_ch["title"]}}</a></div>
+            </div>
+        </div>
+        <div class="description row">
+            <span>{{book.get("desc")}}</span>
+        </div>
+        <div role="separator" class="divider"></div>
+        <table class="table table-striped">
+            {%set cs=int(book.get("chapters", 0))%}
+            {%set rows=int((cs+2-1)/2)%}
+            {%set chs=book.get("chapter_list", [])%}
+            {% for ridx in range(rows) %}
+            <tr class="row">
+                {%for cidx in range(2) %}
+                {%if (ridx * 2 + cidx) >= len(chs)%}
+                {%break%}
+                {%end%}
+                {%set ch=chs[ridx *2 + cidx]%}
+                <td class="col-xs-6 col-md-4 ">
+                    {%set url="http://m.baidu.com/tc?from=opentc&src=" + ch["url"]%}
+                    <a href="{{url}}" target="_blank"> {{ch["title"]}}</a>
+                </td>
+                {% end %}
+            </tr>
+            {%end%}
+        </table>
+    </div>
+
+</div>
+<!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</body>
+</html>

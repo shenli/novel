@@ -101,7 +101,7 @@ def get_url_path(url):
 
 def novel_to_book(novel):
     book = {}
-    cpy_attrs = ["bid", "name", "author", "status", "category", "rank", "image", "chapters", "update_time"]
+    cpy_attrs = ["bid", "name", "author", "status", "category", "rank", "image", "chapters", "update_time", "desc"]
     for attr in cpy_attrs:
         if attr in novel:
             book[attr] = novel[attr]

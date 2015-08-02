@@ -119,3 +119,10 @@ class LLXSParser(Parser):
         book_list = soup.find('div', {'id': 'content'})
         return book_list.encode("utf-8")
 
+    def parse_home_page(self, url, html):
+        soup = BeautifulSoup(html)
+        if soup is None:
+            print "soup is None"
+            return None
+
+

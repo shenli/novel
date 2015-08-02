@@ -1,4 +1,5 @@
 __author__ = 'shenli'
+# -*- coding: utf-8 -*-
 
 
 import sys
@@ -45,6 +46,9 @@ class NovelServer(Server):
 
     def get_novel(self, nid):
         return self.db.get_novel(nid)
+
+    def get_novel_by_category(self, cat):
+        return self.db.search_novel({"category": cat})
 
     def add_or_update(self, novel):
         if 'nid' not in novel:
@@ -101,9 +105,25 @@ class BookServer(Server):
         if curr_len < novel["chapters"] and dbbook.get('manual_src', 0) == 0:
             save_data['curr_src'] = nid
 
+        if 'desc' in novel and ('desc' not in dbbook or len(dbbook['desc']) == 0):
+            save_data['desc'] = novel['desc']
+
         if len(save_data) > 0:
             save_data['bid'] = bid
             save_data["update_time"] = time.time()
             #query = {"bid": bid}
             return self.db.update_book(save_data)
         return True
+
+
+class OperateServer(Server):
+    def __init__(self, db):
+        Server.__init__(self, db)
+
+    def get_hot_books(self):
+        books = ['69ca8355704fae89', 'f8f22c88139bf6e3', 'a4094d4ffc1e9df7']
+        return books
+
+    def get_categories(self):
+        cats = ["女生小说", "武侠修真"]
+        return cats
